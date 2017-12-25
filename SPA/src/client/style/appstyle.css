@@ -544,7 +544,9 @@ outline: none;
 }
 .nav>li>a:focus, .nav>li>a:hover {
     text-decoration: none;
-    background-color: #dabb68;
+    background-color: #c1a24c!important;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 }
 
 #page-wrapper {

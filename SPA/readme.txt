@@ -1,1 +1,0 @@
-Chuc nang app dinh vi, app quan ly va app tai xe se lam o day

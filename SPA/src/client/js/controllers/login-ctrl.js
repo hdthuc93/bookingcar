@@ -19,6 +19,30 @@ function loginCtrl($scope, $cookieStore, $http, $rootScope, $timeout, $location,
   init();
 
   $scope.login = function () {
+    /****************************** */
+    if (1) {
+      var expireDate = new Date();
+      expireDate.setDate(expireDate.getDate() + 732);
+      // Setting a cookie
+      $rootScope.masterToken = 11111;
+      $cookieStore.put(
+        'userdata',
+        {
+          loggedIn: true,
+          name: "Phong",
+          user_id: "PhongNguyen",
+          user_type: 1,
+          token: 11111
+        },
+        {
+          'expires': expireDate
+        });
+
+      $location.path('/');
+    }
+    return;
+
+    /******************************** */
     if ($scope.loginForm.$invalid) {
       return;
     }
@@ -76,7 +100,7 @@ function loginCtrl($scope, $cookieStore, $http, $rootScope, $timeout, $location,
 
     let param = angular.copy($scope.item);
     param.user_type = 0;
-    
+
     $http.post("api/user", param).then(function (response) {
       helper.popup.info({ title: "Thông báo", message: response.data.message, close: function () { return; } });
       if (response.data.success) {

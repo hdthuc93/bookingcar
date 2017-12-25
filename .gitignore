@@ -1,0 +1,11 @@
+#.NET Application
+
+
+# Single Page Application
+SPA/bower_components
+SPA/node_modules
+
+#info file config
+SPA/src/server/configs/const.js
+SPA/src/server/configs/aws_const.json
+SPA/src/server/tmp/*
