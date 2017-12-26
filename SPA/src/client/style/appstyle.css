@@ -379,7 +379,7 @@ table{
 }
 
 .grid {
-    min-width: 400px;
+    min-width: 100px;
     max-width: 100%;
     /* height: 250px; */
 }
@@ -417,6 +417,10 @@ table{
 @media (max-width: 767px){
     .navbar {
         position: inherit!important;
+    }
+    .navbar-header a.navbar-brand{
+        width: 100%;
+        text-align: center;
     }
 }
 /* nav - END */

@@ -1,6 +1,10 @@
 var app = angular.module("bookingCar", [
     'ui.bootstrap',
-    'ui.router', 'ui.router.state.events',
+    'ui.router', 
+    'ui.router.state.events',
+    'ui.grid', 
+    'ui.grid.selection', 
+    'ui.grid.resizeColumns',
     'ngCookies',    
     'mod.helper']);
 module.factory('Auth', ['$cookieStore', '$rootScope', function ($cookieStore, $rootScope) {
