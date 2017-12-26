@@ -9,3 +9,21 @@ SPA/node_modules
 SPA/src/server/configs/const.js
 SPA/src/server/configs/aws_const.json
 SPA/src/server/tmp/*
+.NET APP/Telephonist/.vs/Telephonist/v14/.suo
+.NET APP/Telephonist/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+.NET APP/Telephonist/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+.NET APP/Telephonist/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+.NET APP/Telephonist/obj/Debug/Telephonist.pdb
+.NET APP/Telephonist/obj/Debug/Telephonist.exe
+.NET APP/Telephonist/obj/Debug/Telephonist.csprojResolveAssemblyReference.cache
+.NET APP/Telephonist/obj/Debug/Telephonist.csproj.GenerateResource.Cache
+.NET APP/Telephonist/obj/Debug/Telephonist.csproj.FileListAbsolute.txt
+.NET APP/Telephonist/obj/Debug/Telephonist.Properties.Resources.resources
+.NET APP/Telephonist/obj/Debug/Telephonist.FrmMain.resources
+.NET APP/Telephonist/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+.NET APP/Telephonist/obj/Debug/DesignTimeResolveAssemblyReferences.cache
+.NET APP/Telephonist/bin/Debug/Telephonist.vshost.exe.config
+.NET APP/Telephonist/bin/Debug/Telephonist.vshost.exe
+.NET APP/Telephonist/bin/Debug/Telephonist.pdb
+.NET APP/Telephonist/bin/Debug/Telephonist.exe.config
+.NET APP/Telephonist/bin/Debug/Telephonist.exe
