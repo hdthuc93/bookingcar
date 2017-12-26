@@ -1,1 +1,0 @@
-App dien thoai vien se o day
