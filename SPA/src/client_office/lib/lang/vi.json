@@ -1,0 +1,84 @@
+{
+    "lang": "vi",
+    "label": {
+        "mainTitle": "Hệ thống giải bài tập ma trận",
+        "pageNotFound": "Lỗi không tìm thấy",
+        "pageNotFoundDetail": "Trang bạn truy cập dường như không tồn tại",
+        "logout": "Đăng xuất",
+        "changeLangVi": "Đổi sang tiếng Việt",
+        "changeLangEn": "Đổi sang tiếng Anh",
+		"selectOne":"Chọn một",
+		"addition":"Cộng với",
+		"subtraction":"Trừ cho",
+		"multiplication":"Nhân với",
+		"save":"Lưu",
+        "saveAndGiveAns":"Lưu & Nhập đáp số",
+        "register":"Đăng ký",
+        "login":"Đăng nhập vào hệ thống"
+    },
+    "menu": {
+        "home": "Trang chủ",
+        "taskList": "Danh sách bài tập",
+        "admin": {
+            "label": "Dành cho quản trị",
+            "openExamOnline": "Mở cuộc thi Online",
+            "changeReg": "Thay đổi quy định"
+        },
+        "teacher": {
+            "label": "Dành cho giáo viên",
+            "createTask": "Soạn bài tập",
+            "mark": "Chấm điểm"
+        },
+        "student": {
+            "label": "Dành cho học sinh",
+            "solveTask": "Giải bài tập",
+            "enterExamOnline": "Thi Online"
+        }
+    },
+    "login":{
+        "email":"Nhập địa chỉ Email",
+        "password":"Nhập mật khẩu",
+        "register":"Học sinh đăng ký"
+    },
+    "register":{
+        "firstName":"Tên",
+        "lastName":"Họ",
+        "email":"Địa chỉ Email",
+        "password":"Mật khẩu",
+        "rePassword":"Nhập lại mật khẩu",
+        "backToLogin":"Quay lại đăng nhập"
+    },
+    "task":{
+        "create":{
+            "title":"Soạn bài tập",
+            "selectInfo":"Chọn thông tin",
+            "taskType":"Chọn loại bài tập",
+            "hardLevel":"Chọn độ khó",
+            "level1":"Dễ",
+            "level2":"Vừa",
+            "level3":"Khó",
+            "row":"Chọn số dòng",
+            "col":"Chọn số cột",
+            "matrixSquare":"Chọn ma trận vuông cấp",
+            "fillTask":"Nhập nội dung đề bài"
+        },
+        "mark":{
+            "title":"Chấm điểm"
+        },
+        "solve":{
+            "title":"Giải bài tập ma trận"
+        }
+    },
+    "exam":{
+        "create":{
+            "title":"Mở cuộc thi online"
+        },
+        "enter":{
+            "title":"Tham gia cuộc thi online"
+        }
+    },
+    "regulation":{
+        "title":"Quy định"
+    },
+    "msg": {}
+}

@@ -1,5 +1,5 @@
 'use-strict'
-var app = angular.module("bookingCar");
+var app = angular.module("driverApp");
 
 app.controller("driverCtrl", ['$scope', '$rootScope', 'helper', '$location', '$http', driverCtrl]);
 function driverCtrl($scope, $rootScope, helper, $location, $http) {
