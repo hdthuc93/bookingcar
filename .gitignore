@@ -27,3 +27,8 @@ SPA/src/server/tmp/*
 .NET APP/Telephonist/bin/Debug/Telephonist.pdb
 .NET APP/Telephonist/bin/Debug/Telephonist.exe.config
 .NET APP/Telephonist/bin/Debug/Telephonist.exe
+
+
+#server side ignore
+server_side/src/configs/connection.js
+server_side/node_modules
