@@ -32,3 +32,8 @@ SPA/src/server/tmp/*
 #server side ignore
 server_side/src/configs/connection.js
 server_side/node_modules
+
+
+#SPA_driver
+client_driver/node_modules
+client_driver/bower_components

@@ -1,0 +1,29 @@
+{
+  "name": "booking_car",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "PHONG-THANG-THINH-THUC-TUAN"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "angular": "^1.6.6",
+    "angular-cookies": "^1.6.6",
+    "angular-bootstrap": "^2.5.0",
+    "angular-ui-router": "^1.0.7",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "metisMenu": "^2.7.0",
+    "angular-ui-grid": "~4.1.3"
+  },
+  "private": true
+}
