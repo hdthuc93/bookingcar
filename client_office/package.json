@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/.bin/babel-node --presets babel-preset-es2017 ./src/server/app.js"
+    "office": "./node_modules/http-server/bin/http-server ./ -p 8081"
   },
   "babel": {
     "presets": [
@@ -15,8 +15,9 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
+    "bower": "^1.8.2",
+    "http-server": "^0.11.1"
   }
 }
