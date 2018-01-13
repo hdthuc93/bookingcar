@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "office": "./node_modules/http-server/bin/http-server ./ -p 8081"
+    "office": "./node_modules/http-server/bin/http-server ./ -p 8081 -c-1"
   },
   "babel": {
     "presets": [

@@ -23,8 +23,12 @@ angular.module('bookingCar').config(['$stateProvider', '$urlRouterProvider', '$l
                 url: '/manage/position',
                 templateUrl: 'templates/manage-position.html'
             })
+            .state('locatePending', {
+                url: '/locate-pending',
+                templateUrl: 'templates/locate-pending.html'
+            })
             .state('locate', {
-                url: '/locate',
+                url: '/locate/:id',
                 templateUrl: 'templates/locate.html'
             })
             .state('driver', {

@@ -20,7 +20,7 @@
     <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <!-- UI Grid CSS -->
-   <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
 
     <!-- Custom theme CSS -->
     <link href="lib/bootstrap-sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
@@ -42,31 +42,31 @@
 
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <a href="#/locate" title="Định vị toạ độ">
+                    <a href="#/locate-pending" title="Định vị toạ độ">
                         <i class="fa fa-map-marker fa-fw"></i>Định vị</a>
                 </li>
                 <li>
                     <a href="#/manage/position" title="Quản lí trạng thái điểm">
                         <i class="fa fa-list fa-fw"></i>Quản lí điểm</a>
-                <!-- </li>
+                    <!-- </li>
                 <li>
                     <a href="#/driver" title="Dành cho tài xế">
                         <i class="fa fa-car fa-fw"></i>Tài xế</a>
                 </li> -->
-                <li class="dropdown pull-right">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
-                        <i class="fa fa-user fa-fw"></i>
-                        <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li ng-controller="loginCtrl">
-                            <a href="#" ng-click="logout()">
-                                <i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
+                    <li class="dropdown pull-right">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
+                            <i class="fa fa-user fa-fw"></i>
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li ng-controller="loginCtrl">
+                                <a href="#" ng-click="logout()">
+                                    <i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
         </nav>
@@ -110,8 +110,17 @@
     <script type="text/javascript" src="js/controllers/main-ctrl.js"></script>
     <script type="text/javascript" src="js/controllers/login-ctrl.js"></script>
     <script type="text/javascript" src="js/controllers/locate-ctrl.js"></script>
+    <script type="text/javascript" src="js/controllers/locate-pending-ctrl.js"></script>
     <script type="text/javascript" src="js/controllers/manage-position-ctrl.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrrkYVy5XgV8EZtz0ztxRioAJh4Z50upM"></script>
+
+    <!-- FIREBASE -->
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+    <script src="lib/config/ggFirebase.js"></script>
 </body>
 
 </html>

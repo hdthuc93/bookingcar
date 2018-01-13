@@ -6,7 +6,7 @@ var app = angular.module("bookingCar", [
     'ui.grid.selection', 
     'ui.grid.resizeColumns',
     'ngCookies',    
-    'mod.helper']);
+    'mod.helper','firebase']);
 module.factory('Auth', ['$cookieStore', '$rootScope', function ($cookieStore, $rootScope) {
     var user;
     return {
