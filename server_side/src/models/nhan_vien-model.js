@@ -16,8 +16,7 @@ const NhanVien = sequelize.define('nhan_vien', {
   },
   ngay_sinh: {
     type: Sequelize.DATE,
-    allowNull: true,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+    allowNull: true
   },
   so_cmnd: {
     type: Sequelize.STRING(20),

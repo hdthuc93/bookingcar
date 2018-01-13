@@ -10,20 +10,21 @@ const KhachHang = sequelize.define('khach_hang', {
   },
   ten_kh: {
     type: Sequelize.STRING(255),
-    allowNull: false
+    allowNull: true
   },
   ngay_sinh: {
     type: Sequelize.DATE,
-    allowNull: false,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
+    allowNull: true
   },
   so_dt: {
     type: Sequelize.STRING(15),
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   so_cmnd: {
     type: Sequelize.STRING(20),
-    allowNull: false
+    allowNull: true,
+    unique: true
   }
 }, {
   tableName: 'khach_hang'
