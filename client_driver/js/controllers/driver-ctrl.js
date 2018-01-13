@@ -1,48 +1,67 @@
 'use-strict'
 var app = angular.module("driverApp");
 
-app.controller("driverCtrl", ['$scope', '$rootScope', 'helper', '$location', '$http', driverCtrl]);
-function driverCtrl($scope, $rootScope, helper, $location, $http) {
+app.controller("driverCtrl", ['$scope', '$rootScope', 'helper', '$location', '$http', '$firebaseObject', '$firebaseArray', driverCtrl]);
+function driverCtrl($scope, $rootScope, helper, $location, $http, $firebaseObject, $firebaseArray) {
     function init() {
         $scope.data = null;
     }
     init();
 
+    //Tao tai xe 
+    var ref = firebase.database().ref("drivers");
+    var currentDriver = $firebaseArray(ref.orderByChild("id").equalTo($rootScope.userData.car_id));
+    $scope.position = {
+        lat: parseFloat("10.75688000000"+ Math.floor(10 * Math.random())),
+        lng: parseFloat("106.6809835000000"+ Math.floor(10 * Math.random())),
+    }
+    currentDriver.$loaded().then(function () {
+        angular.forEach(currentDriver, function (value, key) {
+            ref.child(value.$id).remove();
+        });
+        var newData = ref.push();
+        newData.set({
+            id: $rootScope.userData.car_id,
+            toa_do: JSON.stringify($scope.position),
+            status: 0,
+            ten_nv: $rootScope.userData.name
+        });
+    });
+
+
     function driverMap() {
-        var myCenter = new google.maps.LatLng(10.791424, 106.6972366);
+        var myCenter = new google.maps.LatLng($scope.position.lat,$scope.position.lng);
         var mapCanvas = document.getElementById("driverMap");
         var mapOptions = { center: myCenter, zoom: 16 };
         var map = new google.maps.Map(mapCanvas, mapOptions);
-        var markerCustomer = new google.maps.Marker(
-            {
-                map: map,
-                // icon: "https://maps.google.com/mapfiles/kml/shapes/man.png",
-                icon: "/img/client.png",
-                //label:"AAA",
-                draggable: true,
-                animation: google.maps.Animation.DROP,
-                position: { lat: 10.791424, lng: 106.6972366 }
-            });
-        markerCustomer.setMap(map);
+        // var markerCustomer = new google.maps.Marker(
+        //     {
+        //         map: map,
+        //         icon: "/img/client.png",
+        //         draggable: false,
+        //         animation: google.maps.Animation.DROP,
+        //         position: $scope.position
+        //     });
+        // markerCustomer.setMap(map);
+        // var infowindow = new google.maps.InfoWindow({
+        //     content: 'Điểm đón'
+        // });
+        //        infowindow.open(map, markerCustomer);
+
 
         var markerDriver = new google.maps.Marker(
             {
                 map: map,
-                // icon: "https://maps.google.com/mapfiles/kml/shapes/bus.png",
                 icon: "/img/car.png",
-                //label:"AAA",
                 draggable: true,
                 animation: google.maps.Animation.DROP,
-                position: { lat: 10.789410, lng: 106.6952366 }
+                position: $scope.position
             });
         markerDriver.setMap(map);
 
-        var infowindow = new google.maps.InfoWindow({
-            content: 'Điểm đón'
-        });
-        infowindow.open(map, markerCustomer);
+        
 
-        google.maps.event.addListener(markerCustomer, 'dragend', function () {
+        google.maps.event.addListener(markerDriver, 'dragend', function () {
             geocodePosition(markerCustomer.getPosition());
         });
 
@@ -67,6 +86,4 @@ function driverCtrl($scope, $rootScope, helper, $location, $http) {
     }
 
     driverMap();
-
-
 }

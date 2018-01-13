@@ -6,35 +6,46 @@ var app = angular.module("driverApp", [
     'ui.grid.selection', 
     'ui.grid.resizeColumns',
     'ngCookies',    
-    'mod.helper']);
+    'mod.helper', 'firebase']);
 module.factory('Auth', ['$cookieStore', '$rootScope', function ($cookieStore, $rootScope) {
     var user;
     return {
-        getUser: function () {
+        getUser: function () { 
             return $cookieStore.get("userdata");
         },
         isLoggedIn: function () {
             if ($cookieStore.get('userdata')) {
-                if ($cookieStore.get('userdata')) {
-                    $rootScope.masterToken = $cookieStore.get('userdata').token;
-                    $rootScope.masterUserRole = $cookieStore.get('userdata').user_type;
-                    return $cookieStore.get('userdata').loggedIn;
+                var data = $cookieStore.get('userdata');
+                var expireDate = new Date(data.expire);
+                var currentDate = new Date();
+                if(expireDate<currentDate){ console.log(1111)
+                    $cookieStore.put('userdata', {});  
+                    return false;
                 }
+                if(data.loggedIn){
+                    $rootScope.userData = angular.copy(data);
+                    return true;
+                }else{
+                    $cookieStore.put('userdata', {});  
+                    return false;
+                    $rootScope.userData = null;
+                }
+                $cookieStore.put('userdata', {});  
                 return false;
             } else {
+                $cookieStore.put('userdata', {});  
                 return false;
             }
         }
     }
-}]).run(['$rootScope', '$location', 'Auth', '$http', function ($rootScope, $location, Auth, $http) {
+}]).run(['$rootScope', '$location', 'Auth', '$http', function ($rootScope, $location, Auth, $http, $cookieStore) {
     $rootScope.$on('$locationChangeStart', function (event) {
         if (!Auth.isLoggedIn()) {
             $location.path('/login');
             $rootScope.isLoggedIn = false;
         }
         else {
-            $rootScope.masterUserName = Auth.getUser().name || "Người dùng";
-            $rootScope.user_id = Auth.getUser().user_id || null;
+            $rootScope.userData = Auth.getUser();
             $rootScope.isLoggedIn = true;
         }
     });

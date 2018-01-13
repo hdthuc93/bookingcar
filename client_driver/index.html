@@ -35,10 +35,11 @@
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header text-center">
+            <div class="navbar-header text-right">
                 <a class="navbar-brand" href="#">Ứng dụng tài xế</a>
+                {{userData.name}},
                 <a ng-controller="loginCtrl" href="#" ng-click="logout()" style="line-height: 50px;">
-                    <i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                    <i class="fa fa-sign-out fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a>
             </div>
             <!-- /.navbar-header -->
         </nav>
@@ -83,6 +84,13 @@
     <script type="text/javascript" src="js/controllers/driver-ctrl.js"></script>
     <script type="text/javascript" src="js/controllers/login-ctrl.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrrkYVy5XgV8EZtz0ztxRioAJh4Z50upM"></script>
+    <!-- FIREBASE -->
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    
+        <!-- AngularFire -->
+        <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+        <script src="lib/config/ggFirebase.js"></script>
 </body>
 
 </html>

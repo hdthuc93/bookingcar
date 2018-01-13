@@ -9,7 +9,7 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
     // newData.set({
     //              id: 5,
     //              toa_do: '{"lat":10.75688,"lng":106.68098350000002}',
-    //              status: 1,
+    //              status: 0,
     //              ten_nv: "Tuấn"
     //       });
 

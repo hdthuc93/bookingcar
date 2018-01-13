@@ -2,15 +2,14 @@ var app = angular.module('driverApp')
 app.controller('loginCtrl', ['$scope', '$cookieStore', '$http', '$rootScope', '$timeout', '$location', 'helper', loginCtrl]);
 
 function loginCtrl($scope, $cookieStore, $http, $rootScope, $timeout, $location, helper) {
-  $scope.emailPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
   function init() {
     $scope.isRegister = false;
-    $scope.email = "";
+    $scope.username = "";
     $scope.password = "";
     $scope.item = {
       first_name: '',
       last_name: '',
-      email: '',
+      username: '',
       user_type: null,
       password: '',
       rePassword: '',
@@ -19,42 +18,18 @@ function loginCtrl($scope, $cookieStore, $http, $rootScope, $timeout, $location,
   init();
 
   $scope.login = function () {
-    /****************************** */
-    if (1) {
-      var expireDate = new Date();
-      expireDate.setDate(expireDate.getDate() + 732);
-      // Setting a cookie
-      $rootScope.masterToken = 11111;
-      $cookieStore.put(
-        'userdata',
-        {
-          loggedIn: true,
-          name: "Phong",
-          user_id: "PhongNguyen",
-          user_type: 1,
-          token: 11111
-        },
-        {
-          'expires': expireDate
-        });
-
-      $location.path('/');
-    }
-    return;
-
-    /******************************** */
     if ($scope.loginForm.$invalid) {
       return;
     }
     var body = {
-      "Email": $scope.email || null,
-      "Pass": $scope.password || null
+      "username": $scope.username || null,
+      "password": $scope.password || null
     }
-    $http.post('/api/logins', body).then(function successCallBack(res) {
+    $http.post('http://localhost:3000/api/users/login', body).then(function successCallBack(res) {
       if (res.data.success) {
-        var data = res.data;
+        var data = res.data.data;
         var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 732);
+        expireDate.setDate(expireDate.getDate()+1000);
         // Setting a cookie
         $rootScope.masterToken = data.token;
         $cookieStore.put(
@@ -62,8 +37,8 @@ function loginCtrl($scope, $cookieStore, $http, $rootScope, $timeout, $location,
           {
             loggedIn: true,
             name: data.name,
+            car_id: data.car_id,
             user_id: data.user_id,
-            user_type: data.user_type,
             token: data.token
           },
           {
@@ -85,30 +60,31 @@ function loginCtrl($scope, $cookieStore, $http, $rootScope, $timeout, $location,
   }
 
   $scope.logout = function () {
+    
     $cookieStore.put('userdata', {});
     $location.path('/login');
   }
-  $scope.register = function () {
-    if ($scope.registerForm.$error.required && $scope.registerForm.$error.required.length > 0) {
-      $scope.registerForm[$scope.registerForm.$error.required[0].$name].$touched = true;
-      return false;
-    }
-    if (typeof $scope.registerForm.$error.email !== 'undefined' && $scope.registerForm.$error.email.length > 0) {
-      $scope.registerForm[$scope.registerForm.$error.email[0].$name].$touched = true;
-      return false;
-    }
+  // $scope.register = function () {
+  //   if ($scope.registerForm.$error.required && $scope.registerForm.$error.required.length > 0) {
+  //     $scope.registerForm[$scope.registerForm.$error.required[0].$name].$touched = true;
+  //     return false;
+  //   }
+  //   if (typeof $scope.registerForm.$error.username !== 'undefined' && $scope.registerForm.$error.username.length > 0) {
+  //     $scope.registerForm[$scope.registerForm.$error.username[0].$name].$touched = true;
+  //     return false;
+  //   }
 
-    let param = angular.copy($scope.item);
-    param.user_type = 0;
+  //   let param = angular.copy($scope.item);
+  //   param.user_type = 0;
 
-    $http.post("api/user", param).then(function (response) {
-      helper.popup.info({ title: "Thông báo", message: response.data.message, close: function () { return; } });
-      if (response.data.success) {
-        init();
-      };
-    });
+  //   $http.post("api/user", param).then(function (response) {
+  //     helper.popup.info({ title: "Thông báo", message: response.data.message, close: function () { return; } });
+  //     if (response.data.success) {
+  //       init();
+  //     };
+  //   });
 
-  }
+  // }
 }
 
 
