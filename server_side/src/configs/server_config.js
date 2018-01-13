@@ -1,7 +1,8 @@
 import express from 'express';
 import routes from '../routes/index-route';
 import bodyParser from 'body-parser';
-import morgan from 'morgan'
+import morgan from 'morgan';
+import cors from 'cors';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '../../../dist/index.html');
 });
 
+app.options('*', cors());
 app.use('/api', routes);
 
 export default app;
