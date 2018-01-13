@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,7 +39,7 @@ namespace Telephonist
                     ma_xe = string.Empty,
                     ma_loai_xe = cboLoaiXe.SelectedIndex,
                     status = 0,
-                    tg_date = Function.ConvertDateTimeToTimestamp(DateTime.Now),
+                    tg_dat = Function.ConvertDateTimeToTimestamp(DateTime.Now),
                     xuat_phat = txtDiaChiDon.Text,
                     xuat_phat_toa_do = string.Empty
                 });
@@ -54,6 +55,7 @@ namespace Telephonist
                 if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
                 {
                     MessageBox.Show("Đặt xe thành công", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadListDatXe();
                 }
                 else
                 {
@@ -78,6 +80,67 @@ namespace Telephonist
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FrmMain_Load(object sender, EventArgs e)
+        {
+            LoadListDatXe();
+        }
+
+        private void LoadListDatXe()
+        {
+            var request = (HttpWebRequest)WebRequest.Create("https://bookingcar-a2d85.firebaseio.com/booking/.json");
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+            var firebaseLookup = JsonConvert.DeserializeObject<Dictionary<string, DatXe>>(responseString);
+            if (firebaseLookup != null)
+            {
+                var data = firebaseLookup.Values.ToList();
+                foreach (DatXe item in data)
+                {
+                    if (item.Ma_loai_xe == "1")
+                        item.Ten_loai_xe = "Premium";
+                    else
+                        item.Ten_loai_xe = "Thường";
+                    if ( !string.IsNullOrEmpty(item.Tg_dat))
+                    {
+                        double temp;
+                        double.TryParse(item.Tg_dat, out temp);
+                        item.Tg_dat = Function.UnixTimeStampToDateTime(temp).ToString("dd/MM/yyyy h:mm tt");
+                    }
+                    if (item.Status != null)
+                    {
+                        if ( int.Parse(item.Status) == (int)Enums.Status.ChuaDinhVi)
+                        {
+                            item.Status = "Chưa định vị";
+                        }
+                        else if ( int.Parse(item.Status) == (int)Enums.Status.DaDinhVi)
+                        {
+                            item.Status = "Đã định vị";
+                        }
+                        else if (int.Parse(item.Status) == (int)Enums.Status.DangDiChuyen)
+                        {
+                            item.Status = "Đang di chuyển";
+                        }
+                        else if (int.Parse(item.Status) == (int)Enums.Status.HoanTatChuyenDi)
+                        {
+                            item.Status = "Hoàn tất chuyến đi";
+                        }
+                        else if (int.Parse(item.Status) == (int)Enums.Status.KhongCoXe)
+                        {
+                            item.Status = "Không có xe";
+                        }
+                        else if (int.Parse(item.Status) == (int)Enums.Status.XeDaNhan)
+                        {
+                            item.Status = "Xe đã nhận";
+                        }
+                    }
+                }
+                gcDatXe.DataSource = data;
+            }
         }
     }
 }
