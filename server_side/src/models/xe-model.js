@@ -4,17 +4,17 @@ import NhanVien from './nhan_vien-model';
 
 const Xe = sequelize.define('xe', {
   id: {
-    type: DataTypes.INTEGER(11),
+    type: Sequelize.INTEGER(11),
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
   },
   bien_so_xe: {
-    type: DataTypes.STRING(30),
+    type: Sequelize.STRING(30),
     allowNull: false
   },
   ma_loai: {
-    type: DataTypes.INTEGER(11),
+    type: Sequelize.INTEGER(11),
     allowNull: false,
     references: {
       model: 'loai_xe',
@@ -22,7 +22,7 @@ const Xe = sequelize.define('xe', {
     }
   },
   ma_tai_xe: {
-    type: DataTypes.INTEGER(11),
+    type: Sequelize.INTEGER(11),
     allowNull: false
   }
 }, {

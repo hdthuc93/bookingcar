@@ -3,13 +3,13 @@ import { sequelize, Sequelize } from './index-model';
 
 const LoaiNV = sequelize.define('loai_nv', {
   id: {
-    type: DataTypes.INTEGER(11),
+    type: Sequelize.INTEGER(11),
     allowNull: false,
     primaryKey: true,
     autoIncrement: true
   },
   ten_loai: {
-    type: DataTypes.STRING(255),
+    type: Sequelize.STRING(255),
     allowNull: false
   }
 }, {
