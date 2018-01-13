@@ -1,4 +1,5 @@
 import NhanVien from '../models/nhan_vien-model';
+import Xe from '../models/xe-model';
 import conn from '../configs/connection';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -46,7 +47,7 @@ function login(req, res) {
             });
         }
 
-        bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+        bcrypt.compare(req.body.password, user.password, async function(err, isMatch) {
             if(err) {
                 console.log(err);
                 return res.status(500).json({
@@ -56,6 +57,7 @@ function login(req, res) {
             } 
 
             if(isMatch) {
+                let result = await Xe.findOne({ where: { ma_tai_xe: user.id }});
                 jwt.sign({ username: user.username, user_type: user.ma_loai }, conn.secretKey, 
                         { algorithm: 'HS256', expiresIn: 60 * 60 * 24 * 7 }, (err, token) => {
                     if(err) {
@@ -69,8 +71,9 @@ function login(req, res) {
                         success: true,
                         message: "Login successfully",
                         data: {
-                            real_name: user.real_name,
-                            username: user.username,
+                            name: user.real_name,
+                            user_id: user.username,
+                            car_id: result.id,
                             // role: user.user_type_id,
                             token: token
                         }
