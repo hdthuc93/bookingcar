@@ -8,10 +8,10 @@
         </div>
         <form ng-show="!isRegister" role="form" id="login-form" name="loginForm">
             <div class="box-input">
-                <input class="box-control" name="email" ng-model="email" autofocus ng-class="{
-                        'input-error': loginForm.email.$invalid &&  loginForm.email.$touched }"
+                <input class="box-control" name="username" ng-model="username" autofocus ng-class="{
+                        'input-error': loginForm.username.$invalid &&  loginForm.username.$touched }"
                     required>
-                <label class="box-label">Email</label>
+                <label class="box-label">Người dùng</label>
             </div>
             <div class="box-input">
                 <input class="box-control" name="password" type="password" ng-model="password" maxlength="30" ng-class="{
@@ -38,10 +38,10 @@
                 <label class="box-label">Tên</label>
             </div>
             <div class="box-input">
-                <input class="box-control" ng-pattern="emailPattern" name="email" ng-model="item.email" autofocus ng-class="{
-                        'input-error': registerForm.email.$invalid && registerForm.email.$touched }" title="Địa chỉ Email là bắt buộc"
+                <input class="box-control" ng-pattern="usernamePattern" name="username" ng-model="item.username" autofocus ng-class="{
+                        'input-error': registerForm.username.$invalid && registerForm.username.$touched }" title="Địa chỉ username là bắt buộc"
                     required>
-                <label class="box-label">Email</label>
+                <label class="box-label">username</label>
             </div>
             <div class="box-input">
                 <input class="box-control" name="password" type="password" ng-model="item.password" maxlength="30" ng-class="{

@@ -19,7 +19,6 @@ function locatePendingCtrl($scope, $rootScope, helper, $location, $http, $fireba
         console.log(parseInt(b.tg_dat), parseInt(a.tg_dat));
         return parseInt(b.tg_dat) - parseInt(a.tg_dat);
     })
-    console.log(22222, $scope.data)
 
     // for(var i = 0 ; i<9; i++){
     //     var newData = ref.push();
@@ -74,5 +73,4 @@ function locatePendingCtrl($scope, $rootScope, helper, $location, $http, $fireba
         console.log(row);
         $location.path('locate/'+row.entity.$id);
     }
-
 }
