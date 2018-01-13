@@ -71,7 +71,7 @@ function login(req, res) {
                         success: true,
                         message: "Login successfully",
                         data: {
-                            name: user.real_name,
+                            name: user.ten_nv,
                             user_id: user.username,
                             car_id: result.id,
                             // role: user.user_type_id,
