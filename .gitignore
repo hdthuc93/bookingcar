@@ -27,3 +27,9 @@ SPA/src/server/tmp/*
 .NET APP/Telephonist/bin/Debug/Telephonist.pdb
 .NET APP/Telephonist/bin/Debug/Telephonist.exe.config
 .NET APP/Telephonist/bin/Debug/Telephonist.exe
+.NET APP/.vs/Telephonist/v15/Server/sqlite3/storage.ide-shm
+.NET APP/.vs/Telephonist/v15/Server/sqlite3/db.lock
+.NET APP/.vs/Telephonist/v15/Server/sqlite3/storage.ide
+.NET APP/.vs/Telephonist/v15/Server/sqlite3/storage.ide-wal
+.NET APP/Telephonist/bin/Debug/Newtonsoft.Json.xml
+.NET APP/Telephonist/obj/Debug/Telephonist.csproj.CopyComplete
