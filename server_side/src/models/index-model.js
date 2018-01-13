@@ -8,7 +8,10 @@ const sequelize = new Sequelize(config.nameDB, config.userDB, config.passwordDB,
     define: {
         freezeTableName: true,
         timestamps: false
-    }
+    },
+    dialectOptions: {
+        requestTimeout: 5000
+      },
 });
 
 export { sequelize, Sequelize };
