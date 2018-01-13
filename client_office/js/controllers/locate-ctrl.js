@@ -14,88 +14,99 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
     //       });
 
     var id = $stateParams.id;
+    var mapCanvas = document.getElementById("locateMap");
+    var map = new google.maps.Map(mapCanvas);
+
+    google.maps.event.addListenerOnce(map, 'idle', function(){
+        if (id) {
+            var ref = firebase.database().ref("booking").child(id).once('value').then(function (snapshot) {
+                var data = snapshot.val();
+                var xuat_phat = data.xuat_phat;
+                $scope.curAddress = data.xuat_phat;
+                $scope.$apply();
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'address': xuat_phat }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        $scope.position = {
+                            lat: results[0].geometry.location.lat(),
+                            lng: results[0].geometry.location.lng()
+                        }
+                        var myCenter = new google.maps.LatLng($scope.position.lat, $scope.position.lng);
     
-    if (id) {
-        var ref = firebase.database().ref("booking").child(id).once('value').then(function (snapshot) {
-            var data = snapshot.val();
-            var xuat_phat = data.xuat_phat;
-            $scope.curAddress = data.xuat_phat;
-            $scope.$apply();
-            var geocoder = new google.maps.Geocoder();
-            geocoder.geocode({ 'address': xuat_phat }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    $scope.position = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    }
-                    var myCenter = new google.maps.LatLng($scope.position.lat, $scope.position.lng);
-                    var mapCanvas = document.getElementById("locateMap");
-                    var mapOptions = { center: myCenter, zoom: 17 };
-                    var map = new google.maps.Map(mapCanvas, mapOptions);
-                    var marker = new google.maps.Marker(
-                        {
-                            map: map,
-                            draggable: true,
-                            animation: google.maps.Animation.DROP,
-                            position: $scope.position
+                        var mapOptions = { center: myCenter, zoom: 17 };
+                        map = new google.maps.Map(mapCanvas, mapOptions);
+                        var marker = new google.maps.Marker(
+                            {
+                                map: map,
+                                draggable: true,
+                                animation: google.maps.Animation.DROP,
+                                position: $scope.position
+                            });
+                        marker.setMap(map);
+    
+                        var infowindow = new google.maps.InfoWindow({
+                            content: 'Di chuyển để định vị'
                         });
-                    marker.setMap(map);
-
-                    var infowindow = new google.maps.InfoWindow({
-                        content: 'Di chuyển để định vị'
-                    });
-                    infowindow.open(map, marker);
-
-                    google.maps.event.addListener(marker, 'dragend', function () {
-                        geocodePosition(marker.getPosition());
-                    });
-
-                    var markerDriver = new google.maps.Marker(
-                        {
-                            map: map,
-                            // icon: "https://maps.google.com/mapfiles/kml/shapes/bus.png",
-                            icon: "/img/car.png",
-                            label:{text: "aa", color: "white", fontWeight: "bold"},
-                            draggable: false,
-                            animation: google.maps.Animation.DROP,
-                            position: { lat: 10.7579367, lng: 106.68009989999996 }
+                        infowindow.open(map, marker);
+    
+                        google.maps.event.addListener(marker, 'dragend', function () {
+                            geocodePosition(marker.getPosition());
                         });
-                    markerDriver.setMap(map);
-
-                    function geocodePosition(pos) {
-                        geocoder = new google.maps.Geocoder();
-                        geocoder.geocode
-                            ({
-                                latLng: pos
-                            },
-                            function (results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-
-                                    $scope.curAddress = results[0].formatted_address;
-                                    $scope.position = {
-                                        lat: results[0].geometry.location.lat(),
-                                        lng: results[0].geometry.location.lng()
+    
+                        function geocodePosition(pos) {
+                            geocoder = new google.maps.Geocoder();
+                            geocoder.geocode
+                                ({
+                                    latLng: pos
+                                },
+                                function (results, status) {
+                                    if (status == google.maps.GeocoderStatus.OK) {
+    
+                                        $scope.curAddress = results[0].formatted_address;
+                                        $scope.position = {
+                                            lat: results[0].geometry.location.lat(),
+                                            lng: results[0].geometry.location.lng()
+                                        }
+                                        console.log(JSON.stringify($scope.position))
+                                        $scope.$apply();
                                     }
-                                    console.log(JSON.stringify($scope.position))
-                                    $scope.$apply();
+                                    else {
+                                        helper.popup.info({ title: "Lỗi", message: "Không thể xác định tọa độ", close: function () { return; } })
+                                    }
                                 }
-                                else {
-                                    helper.popup.info({ title: "Lỗi", message: "Không thể xác định tọa độ", close: function () { return; } })
-                                }
-                            }
-                            );
+                                );
+                        }
+    
+                    } else {
+                        helper.popup.info({ title: "Lỗi", message: "Địa chỉ không hợp lệ", close: function () { return; } });
+                        //đưa sang status 5: không có xe
                     }
-
-                } else {
-                    helper.popup.info({ title: "Lỗi", message: "Địa chỉ không hợp lệ", close: function () { return; } });
-                    //đưa sang status 5: không có xe
-                }
+                });
+    
+                // XAY DUNG TAI XE
+                var refDriver = firebase.database().ref("drivers").orderByChild("status").equalTo(0).limitToFirst(10);//limitToFirst: lay n dua dau tien, toLast lay n dua cuoi cung
+                var driverList = $firebaseArray(refDriver);
+    
+                driverList.$loaded().then(function () {
+                    // To iterate the key/value pairs of the object, use angular.forEach()
+                    angular.forEach(driverList, function (value, key) {
+                        var markerDriver = new google.maps.Marker(
+                            {
+                                map: map,
+                                icon: "/img/car.png",
+                                label: { text: value.ten_nv, color: "white", fontWeight: "bold" },
+                                draggable: false,
+                                animation: google.maps.Animation.DROP,
+                                position: JSON.parse(value.toa_do)
+                            });
+                        markerDriver.setMap(map);
+                    });
+                });
             });
-
-        });
-    } else {
-        $location.path('404');
-    }
+        } else {
+            $location.path('404');
+        }
+    });
 
     $scope.savePosition = function () {
         firebase.database().ref("booking").child(id).update({
@@ -106,6 +117,5 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
         }).catch(function (error) {
             helper.popup.info({ title: "Lỗi", message: "Cập nhật tọa độ thất bại", close: function () { return; } });
         });
-        //console.log(id, $scope.position)
     }
 }
