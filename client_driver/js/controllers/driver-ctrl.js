@@ -1,8 +1,8 @@
 'use-strict'
 var app = angular.module("driverApp");
 
-app.controller("driverCtrl", ['$scope', '$rootScope', 'helper', '$location', '$http', '$firebaseObject', '$firebaseArray', driverCtrl]);
-function driverCtrl($scope, $rootScope, helper, $location, $http, $firebaseObject, $firebaseArray) {
+app.controller("driverCtrl", ['$scope', '$rootScope', 'helper', '$location', '$http', '$firebaseObject', '$firebaseArray', '$interval', driverCtrl]);
+function driverCtrl($scope, $rootScope, helper, $location, $http, $firebaseObject, $firebaseArray, $interval) {
     function init() {
         $scope.data = null;
     }
@@ -12,9 +12,13 @@ function driverCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
     var ref = firebase.database().ref("drivers");
     var currentDriver = $firebaseArray(ref.orderByChild("id").equalTo($rootScope.userData.car_id));
     $scope.position = {
-        lat: parseFloat("10.75688000000"+ Math.floor(10 * Math.random())),
-        lng: parseFloat("106.6809835000000"+ Math.floor(10 * Math.random())),
+        // lat: parseFloat("10.756"+ Math.floor(1000000 * Math.random())),
+        // lng: parseFloat("106.67"+ Math.floor(100000 * Math.random())),
+        lat: parseFloat("10.76"+ Math.floor(1000000 * Math.random())),
+        lng: parseFloat("106.65333"+ Math.floor(100000 * Math.random())),
     }
+
+    //Khi load duoc 1 driver
     currentDriver.$loaded().then(function () {
         angular.forEach(currentDriver, function (value, key) {
             ref.child(value.$id).remove();
@@ -26,6 +30,16 @@ function driverCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
             status: 0,
             ten_nv: $rootScope.userData.name
         });
+
+        //Gui vi tri moi 5s
+        $interval(function(){
+            newData.set({
+                id: $rootScope.userData.car_id,
+                toa_do: JSON.stringify($scope.position),
+                status: 0,
+                ten_nv: $rootScope.userData.name
+            });
+        }, 5000)
     });
 
 
@@ -62,7 +76,11 @@ function driverCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
         
 
         google.maps.event.addListener(markerDriver, 'dragend', function () {
-            geocodePosition(markerCustomer.getPosition());
+            $scope.position = {
+                lat: markerDriver.getPosition().lat(),
+                lng: markerDriver.getPosition().lng()
+            }
+            //geocodePosition(markerDriver.getPosition());
         });
 
         function geocodePosition(pos) {
