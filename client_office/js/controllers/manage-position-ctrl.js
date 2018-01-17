@@ -1,8 +1,8 @@
 'use-strict'
 var app = angular.module("bookingCar");
 
-app.controller("managePositionCtrl", ['$scope', '$rootScope', 'helper', '$location', '$http', '$firebaseArray', managePositionCtrl]);
-function managePositionCtrl($scope, $rootScope, helper, $location, $http, $firebaseArray) {
+app.controller("managePositionCtrl", ['$scope', '$rootScope', 'helper', '$location', '$http', '$firebaseArray', '$timeout', managePositionCtrl]);
+function managePositionCtrl($scope, $rootScope, helper, $location, $http, $firebaseArray, $timeout) {
     function init() {
         $scope.data = null;
     }
@@ -22,10 +22,11 @@ function managePositionCtrl($scope, $rootScope, helper, $location, $http, $fireb
 
     $scope.convertDate = function (ts) {
         var date = new Date(ts);
+        console.log(date)
         return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     }
 
-    $scope.statusText = ["Chờ định vị", "Đã định vị", "Chờ xe", "Di chuyển", "Hoàn thành", "Không có xe"]
+    $scope.statusText = ["Chờ định vị", "Đã định vị", "Chờ xe", "Di chuyển", "Hoàn thành", "Không có xe", "Đang định vị"]
 
     $scope.bookingList = {
         minRowsToShow: 15,
@@ -37,7 +38,7 @@ function managePositionCtrl($scope, $rootScope, helper, $location, $http, $fireb
         columnDefs: [
             {
                 field: 'action', displayName: '', minWidth: 80, maxWidth: 100,
-                cellTemplate: '<div class="ui-grid-cell-contents text-center"><button ng-if="row.entity.status == 0"  title="Sửa tọa độ" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-map-marker"></i></button><button ng-if="row.entity.status ==2"  title="Xem đường đi" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.viewTour(row)"><i class="fa fa-eye"></i></button></div>'
+                cellTemplate: '<div class="ui-grid-cell-contents text-center"><button ng-if="row.entity.status == 0"  title="Sửa tọa độ" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-map-marker"></i></button><button ng-if="row.entity.status != 0&&row.entity.status != 6&&row.entity.status != 5"  title="Xem đường đi" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-eye"></i></button></div>'
             },
             {
                 field: 'xuat_phat', displayName: 'Địa chỉ đón', minWidth: 160,
@@ -55,11 +56,11 @@ function managePositionCtrl($scope, $rootScope, helper, $location, $http, $fireb
             {
                 field: 'tg_dat', displayName: 'Đặt lúc', minWidth: 150, maxWidth: 200, sort: {
                     direction: "desc",
-                    priority: 0,
-                }, cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.appScope.convertDate(row.entity.tg_dat)}}</div>'
+                    //priority: 0,
+                }, cellTemplate: '<div class="ui-grid-cell-contents" >{{row.entity.tg_dat | date:"dd-MM-yyyy HH:mm"}}</div>'
             },
             {
-                field: 'driver', displayName: 'Tài xế', minWidth: 150, maxWidth: 200}
+                field: 'ten_tai_xe', displayName: 'Tài xế', minWidth: 150, maxWidth: 200}
         ],
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
@@ -69,9 +70,25 @@ function managePositionCtrl($scope, $rootScope, helper, $location, $http, $fireb
     $scope.bookingList.data = $scope.data;
 
     $scope.locate = function (row) {
-        $location.path('locate/'+row.entity.$id);
-    }
-    $scope.viewTour = function (row) {
-        $location.path('nearest/'+row.entity.$id);
+        if(row.entity.status==6){
+            helper.popup.info({ title: "Lỗi", message: "Đã có người khác làm thay bạn", close: function () { return; } });            
+        }
+        
+        if(row.entity.status==0){
+            firebase.database().ref("booking").child(row.entity.$id).update({
+                status: 6, //dang dinh vi
+            }).then(function () {
+                $timeout(function(){
+                    $location.path('locate/'+row.entity.$id);                
+                }, 500)
+            }).catch(function (error) {
+                helper.popup.info({ title: "Lỗi", message: "Có lỗi xảy ra, vui lòng tải lại trang", close: function () { location.reload(); return; } });
+            });
+        }
+
+        //Xem duong di
+        if(row.entity.status==1||row.entity.status==2||row.entity.status==3){
+            $location.path('locate/'+row.entity.$id);                            
+        }
     }
 }
