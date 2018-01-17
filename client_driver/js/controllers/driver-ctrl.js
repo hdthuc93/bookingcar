@@ -154,7 +154,7 @@ function driverCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
                     status: 0,
                     toa_do: JSON.stringify($scope.position),
                 }).then(function(){
-                    helper.popup.info({ title: "Thông báo", message: "Chuyến đi thành công tốt đẹp", close: function () { return; } });                                    
+                    helper.popup.info({ title: "Thông báo", message: "Chuyến đi thành công tốt đẹp", close: function () { location.reload();return; } });                                    
                 });
             })
         }
