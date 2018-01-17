@@ -149,7 +149,10 @@ namespace Telephonist
                 json = (new StreamReader(response.GetResponseStream())).ReadToEnd();
                 if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Đặt xe thành công", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (DaDinhVi)
+                        MessageBox.Show("Điểm này đã được định vị và chuyển yêu cầu sang hệ thống điều xe thành công", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                        MessageBox.Show("Đặt xe thành công", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadListDatXe();
                 }
                 else
@@ -189,7 +192,7 @@ namespace Telephonist
                     var data = firebaseLookup.Values.ToList();
                     foreach (DatXe item in data)
                     {
-                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat))
+                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat, StringComparison.InvariantCultureIgnoreCase))
                         {
                             return true;
                         }
@@ -220,7 +223,7 @@ namespace Telephonist
                     var data = firebaseLookup.Values.ToList();
                     foreach (DatXe item in data)
                     {
-                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat))
+                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat, StringComparison.InvariantCultureIgnoreCase))
                         {
                             return item.Xuat_phat_toa_do;
                         }
