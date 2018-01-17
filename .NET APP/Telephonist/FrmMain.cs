@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -106,7 +107,11 @@ namespace Telephonist
                     MessageBox.Show("Vui lòng nhập số điện thoại");
                     return;
                 }
-
+                if (!(txtSoDienThoai.Text.Length <= 11))
+                {
+                    MessageBox.Show("Số điện thoại không hợp lệ. Xin vui lòng nhập lại!");
+                    return;
+                }
 
                 var json = JsonConvert.SerializeObject(new
                 {
