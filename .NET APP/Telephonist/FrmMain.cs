@@ -38,6 +38,7 @@ namespace Telephonist
         private void FrmMain_Load(object sender, EventArgs e)
         {
             LoadListDatXe();
+            timer1.Start();
         }
 
         private void LoadListDatXe()
@@ -145,6 +146,11 @@ namespace Telephonist
         private void btnThoat_Click_1(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            LoadListDatXe();
         }
     }
 }
