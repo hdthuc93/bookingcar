@@ -22,7 +22,7 @@ namespace Telephonist
             InitializeComponent();
             cboLoaiXe.SelectedIndex = 0;
         }
-        
+
         private void txtSoDienThoai_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!Char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar))
@@ -60,7 +60,7 @@ namespace Telephonist
                         item.Ten_loai_xe = "Premium";
                     else
                         item.Ten_loai_xe = "Thường";
-                    if ( !string.IsNullOrEmpty(item.Tg_dat))
+                    if (!string.IsNullOrEmpty(item.Tg_dat))
                     {
                         double temp;
                         double.TryParse(item.Tg_dat, out temp);
@@ -68,11 +68,11 @@ namespace Telephonist
                     }
                     if (item.Status != null)
                     {
-                        if ( int.Parse(item.Status) == (int)Enums.Status.ChuaDinhVi)
+                        if (int.Parse(item.Status) == (int)Enums.Status.ChuaDinhVi)
                         {
                             item.Status = "Chưa định vị";
                         }
-                        else if ( int.Parse(item.Status) == (int)Enums.Status.DaDinhVi)
+                        else if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi)
                         {
                             item.Status = "Đã định vị";
                         }
@@ -119,16 +119,24 @@ namespace Telephonist
                     MessageBox.Show("Số điện thoại không hợp lệ. Xin vui lòng nhập lại!");
                     return;
                 }
-
+                string DiaChiDon = txtDiaChiDon.Text;
+                bool DaDinhVi = KiemTraToaDoDaDinhVi(DiaChiDon);
+                int TrangThai = 0;
+                string ToaDoDon = string.Empty;
+                if (DaDinhVi)
+                {
+                    TrangThai = 1;
+                    ToaDoDon = getToaDoXuatPhatDaDinhVi(DiaChiDon);
+                }
                 var json = JsonConvert.SerializeObject(new
                 {
                     dt_kh = txtSoDienThoai.Text.Trim(),
                     ma_xe = string.Empty,
                     ma_loai_xe = cboLoaiXe.SelectedIndex,
-                    status = 0,
+                    status = TrangThai,
                     tg_dat = Function.ConvertDateTimeToTimestamp(DateTime.Now),
                     xuat_phat = txtDiaChiDon.Text,
-                    xuat_phat_toa_do = string.Empty
+                    xuat_phat_toa_do = ToaDoDon
                 });
 
                 var request = WebRequest.CreateHttp("https://bookingcar-a2d85.firebaseio.com/booking/.json");
@@ -163,6 +171,69 @@ namespace Telephonist
         private void timer1_Tick(object sender, EventArgs e)
         {
             LoadListDatXe();
+        }
+
+        private bool KiemTraToaDoDaDinhVi(string diachi)
+        {
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create("https://bookingcar-a2d85.firebaseio.com/booking/.json");
+
+                var response = (HttpWebResponse)request.GetResponse();
+
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                var firebaseLookup = JsonConvert.DeserializeObject<Dictionary<string, DatXe>>(responseString);
+                if (firebaseLookup != null)
+                {
+                    var data = firebaseLookup.Values.ToList();
+                    foreach (DatXe item in data)
+                    {
+                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return false;
+            }
+        }
+
+        private string getToaDoXuatPhatDaDinhVi(string diachi)
+        {
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create("https://bookingcar-a2d85.firebaseio.com/booking/.json");
+
+                var response = (HttpWebResponse)request.GetResponse();
+
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                var firebaseLookup = JsonConvert.DeserializeObject<Dictionary<string, DatXe>>(responseString);
+                if (firebaseLookup != null)
+                {
+                    var data = firebaseLookup.Values.ToList();
+                    foreach (DatXe item in data)
+                    {
+                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat))
+                        {
+                            return item.Xuat_phat_toa_do;
+                        }
+                    }
+                }
+                return string.Empty;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return string.Empty;
+            }
+
         }
     }
 }
