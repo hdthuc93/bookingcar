@@ -31,6 +31,7 @@ SPA/src/server/tmp/*
 
 #server side ignore
 server_side/src/configs/connection.js
+server_side/src/configs/firebase_auth.json
 server_side/node_modules
 
 
