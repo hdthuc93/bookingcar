@@ -10,7 +10,7 @@
                 <label class="">Địa chỉ đón: {{curAddress}}</label>
             </div>
             <div class="form-group text-center">
-                <button ng-disabled="status!=0" ng-click="savePosition()" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Lưu tọa độ</button>
+                <button ng-disabled="status!=0&&status!=6" ng-click="savePosition()" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Lưu tọa độ</button>
             </div>
             <div class="form-group" id="locateMap" style="width:100%; min-height:450px; max-height:80vh; height:50vh"></div>
         </div>

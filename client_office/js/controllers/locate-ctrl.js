@@ -16,7 +16,7 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
                 $scope.status = data.status;
                 $scope.$apply();
                 //Status = 0 , Tu dong dinh vi
-                if (data.status == 0) {
+                if (data.status == 0||data.status == 6) {
                     var geocoder = new google.maps.Geocoder();
                     geocoder.geocode({ 'address': xuat_phat }, function (results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
@@ -166,29 +166,51 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
 
     $scope.savePosition = function () {
         //tim tai xe gan khach nhat
-        var closestDriverId = "";
+        var closestDriver = null;
         var minDistance = 9999999999;
-        for (var i = 0; i < $scope.driverList.length; i++) {
-            var posDriver = $scope.markerDrivers[i].getPosition();
-            var posCustomer = $scope.markerCustomer.getPosition();
-            var distance = getDistance(posDriver, posCustomer);
-            if (minDistance > distance) {
-                minDistance = distance;
-                closestDriverId = $scope.driverList[i].id;
+        if($scope.driverList.length){
+            for (var i = 0; i < $scope.driverList.length; i++) {
+                var posDriver = $scope.markerDrivers[i].getPosition();
+                var posCustomer = $scope.markerCustomer.getPosition();
+                var distance = getDistance(posDriver, posCustomer);
+                if (minDistance > distance) {
+                    minDistance = distance;
+                    closestDriver = $scope.driverList[i];
+                }
             }
+            firebase.database().ref("booking").child(id).update({
+                xuat_phat_toa_do: JSON.stringify($scope.position),
+                status: 1, //duoc dinh vi
+                tai_xe: closestDriver.id,
+                ten_tai_xe: closestDriver.ten_nv
+            }).then(function () {
+                
+            }).catch(function (error) {
+                console.log(error)
+                helper.popup.info({ title: "Lỗi", message: "Cập nhật tọa độ thất bại", close: function () { return; } });
+            });
+
+            console.log(99999, closestDriver.$id)
+            //Cap nhat tai xe
+            firebase.database().ref("drivers").child(closestDriver.$id).update({
+                status: 1 //dang di cho khach
+            }).then(function(){
+                helper.popup.info({ title: "Thông báo", message: "Cập nhật tọa độ thành công. Bấm OK để xem lịch trình", close: function () { location.reload(); return; } });                    
+            })
+            
+        }else{//ko co tai xe
+            firebase.database().ref("booking").child(id).update({
+                xuat_phat_toa_do: JSON.stringify($scope.position),
+                status: 5, //khong co tai xe
+                tai_xe: "",
+                ten_tai_xe: ""
+            }).then(function () {
+                helper.popup.info({ title: "Thông báo", message: "Cập nhật tọa độ thành công. Không tìm thấy tài xế", close: function () { $location.path('manage/position'); return; } });
+            }).catch(function (error) {
+                console.log(error)
+                helper.popup.info({ title: "Lỗi", message: "Cập nhật tọa độ thất bại", close: function () { return; } });
+            });
         }
-
-        firebase.database().ref("booking").child(id).update({
-            xuat_phat_toa_do: JSON.stringify($scope.position),
-            status: 1, //duoc dinh vi
-            tai_xe: closestDriverId
-        }).then(function () {
-            helper.popup.info({ title: "Thông báo", message: "Cập nhật tọa độ thành công. Bấm OK để xem lịch trình", close: function () { location.reload(); return; } });
-
-        }).catch(function (error) {
-            console.log(error)
-            helper.popup.info({ title: "Lỗi", message: "Cập nhật tọa độ thất bại", close: function () { return; } });
-        });
     }
 
     var rad = function (x) {
