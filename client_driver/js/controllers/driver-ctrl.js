@@ -148,6 +148,7 @@ function driverCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
         if($scope.customer){
             firebase.database().ref("booking").child($scope.customer.$id).update({
                 status: 4, //Hoan thanh chuyen di
+                tai_xe: ""
             }).then(function(){
                 ref.child($scope.id).update({
                     status: 0,
