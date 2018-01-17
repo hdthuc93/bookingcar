@@ -36,8 +36,8 @@ function managePositionCtrl($scope, $rootScope, helper, $location, $http, $fireb
         selectionRowHeaderWidth: 35,
         columnDefs: [
             {
-                field: 'action', displayName: '', minWidth: 30, maxWidth: 50,
-                cellTemplate: '<div ng-if="row.entity.status == 0" class="ui-grid-cell-contents text-center"><button title="Sửa tọa độ" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-map-marker"></i></button></div>'
+                field: 'action', displayName: '', minWidth: 80, maxWidth: 100,
+                cellTemplate: '<div class="ui-grid-cell-contents text-center"><button ng-if="row.entity.status == 0"  title="Sửa tọa độ" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-map-marker"></i></button><button ng-if="row.entity.status ==2"  title="Xem đường đi" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.viewTour(row)"><i class="fa fa-eye"></i></button></div>'
             },
             {
                 field: 'xuat_phat', displayName: 'Địa chỉ đón', minWidth: 160,
@@ -57,7 +57,9 @@ function managePositionCtrl($scope, $rootScope, helper, $location, $http, $fireb
                     direction: "desc",
                     priority: 0,
                 }, cellTemplate: '<div class="ui-grid-cell-contents" >{{grid.appScope.convertDate(row.entity.tg_dat)}}</div>'
-            }
+            },
+            {
+                field: 'driver', displayName: 'Tài xế', minWidth: 150, maxWidth: 200}
         ],
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
@@ -67,7 +69,9 @@ function managePositionCtrl($scope, $rootScope, helper, $location, $http, $fireb
     $scope.bookingList.data = $scope.data;
 
     $scope.locate = function (row) {
-        console.log(row);
         $location.path('locate/'+row.entity.$id);
+    }
+    $scope.viewTour = function (row) {
+        $location.path('nearest/'+row.entity.$id);
     }
 }

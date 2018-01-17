@@ -31,10 +31,6 @@ angular.module('bookingCar').config(['$stateProvider', '$urlRouterProvider', '$l
                 url: '/locate/:id',
                 templateUrl: 'templates/locate.html'
             })
-            .state('driver', {
-                url: '/driver',
-                templateUrl: 'templates/driver.html'
-            })
     }
 ]).factory('User', [function () {
     return {

@@ -76,6 +76,7 @@ module.factory('helper', ['$uibModal', '$interval',
                     data.Message = options.message;
                 }
                 var configs = {
+                    backdrop: "static",
                     template: template,
                     animation: true,
                     controller: 'popupCtrl',
