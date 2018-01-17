@@ -3,6 +3,18 @@ import Xe from '../models/xe-model';
 import conn from '../configs/connection';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import firebase from 'firebase/app';
+import admin from 'firebase-admin';
+import config from '../configs/connection';
+import serviceAccount from '../configs/firebase_auth.json';
+// const serviceAccount = require("../configs/firebase_auth.json");
+
+const fbApp = admin.initializeApp({
+    databaseURL: config.databaseFBURL,
+    credential: admin.credential.cert(serviceAccount)
+});
+
+const fbDB = fbApp.database();
 
 async function register(req, res) {
     let user = {
@@ -59,13 +71,15 @@ function login(req, res) {
             if(isMatch) {
                 let result = await Xe.findOne({ where: { ma_tai_xe: user.id }});
                 jwt.sign({ username: user.username, user_type: user.ma_loai }, conn.secretKey, 
-                        { algorithm: 'HS256', expiresIn: 60 * 60 * 24 * 7 }, (err, token) => {
+                        { algorithm: 'HS256', expiresIn: 60 * 60 * 24 * 7 }, async (err, token) => {
                     if(err) {
                         return res.status(500).json({
                             success: false,
                             message: "Error, cannot response a token"
                         });
                     }
+
+                    let fbToken = await admin.auth().createCustomToken(user.username);
 
                     return res.status(200).json({
                         success: true,
@@ -75,7 +89,8 @@ function login(req, res) {
                             user_id: user.username,
                             car_id: result.id,
                             // role: user.user_type_id,
-                            token: token
+                            token: token,
+                            fbToken: fbToken
                         }
                     });
                 })
