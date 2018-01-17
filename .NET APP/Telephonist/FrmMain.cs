@@ -107,6 +107,13 @@ namespace Telephonist
                     MessageBox.Show("Vui lòng nhập số điện thoại");
                     return;
                 }
+
+                if (string.IsNullOrEmpty(txtDiaChiDon.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập địa chỉ đón khách");
+                    return;
+                }
+
                 if (!(txtSoDienThoai.Text.Length <= 11))
                 {
                     MessageBox.Show("Số điện thoại không hợp lệ. Xin vui lòng nhập lại!");
