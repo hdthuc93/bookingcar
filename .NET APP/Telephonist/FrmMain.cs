@@ -73,10 +73,6 @@ namespace Telephonist
                         {
                             item.Status = "Chưa định vị";
                         }
-                        else if ( int.Parse(item.Status) == (int)Enums.Status.DaDinhVi)
-                        {
-                            item.Status = "Chưa định vị";
-                        }
                         else if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi)
                         {
                             item.Status = "Đã định vị";
