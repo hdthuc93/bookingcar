@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnThoat = new System.Windows.Forms.Button();
+            this.btnThoat = new DevExpress.XtraEditors.SimpleButton();
+            this.btnDatXe = new DevExpress.XtraEditors.SimpleButton();
             this.txtDiaChiDon = new System.Windows.Forms.TextBox();
-            this.btnLuu = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cboLoaiXe = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -94,8 +95,8 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btnThoat);
+            this.groupBox1.Controls.Add(this.btnDatXe);
             this.groupBox1.Controls.Add(this.txtDiaChiDon);
-            this.groupBox1.Controls.Add(this.btnLuu);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.cboLoaiXe);
             this.groupBox1.Controls.Add(this.label3);
@@ -115,38 +116,36 @@
             // 
             // btnThoat
             // 
-            this.btnThoat.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThoat.ForeColor = System.Drawing.Color.Black;
-            this.btnThoat.Location = new System.Drawing.Point(278, 286);
-            this.btnThoat.Margin = new System.Windows.Forms.Padding(4);
+            this.btnThoat.Appearance.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Bold);
+            this.btnThoat.Appearance.Options.UseFont = true;
+            this.btnThoat.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButton2.ImageOptions.Image")));
+            this.btnThoat.Location = new System.Drawing.Point(267, 296);
             this.btnThoat.Name = "btnThoat";
-            this.btnThoat.Size = new System.Drawing.Size(79, 28);
-            this.btnThoat.TabIndex = 7;
+            this.btnThoat.Size = new System.Drawing.Size(88, 32);
+            this.btnThoat.TabIndex = 9;
             this.btnThoat.Text = "Thoát";
-            this.btnThoat.UseVisualStyleBackColor = true;
-            this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
+            this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click_1);
+            // 
+            // btnDatXe
+            // 
+            this.btnDatXe.Appearance.Font = new System.Drawing.Font("Tahoma", 7.8F, System.Drawing.FontStyle.Bold);
+            this.btnDatXe.Appearance.Options.UseFont = true;
+            this.btnDatXe.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnDatXe.ImageOptions.Image")));
+            this.btnDatXe.Location = new System.Drawing.Point(170, 296);
+            this.btnDatXe.Name = "btnDatXe";
+            this.btnDatXe.Size = new System.Drawing.Size(91, 32);
+            this.btnDatXe.TabIndex = 8;
+            this.btnDatXe.Text = "Đặt xe";
+            this.btnDatXe.Click += new System.EventHandler(this.btnDatXe_Click);
             // 
             // txtDiaChiDon
             // 
-            this.txtDiaChiDon.Location = new System.Drawing.Point(170, 82);
+            this.txtDiaChiDon.Location = new System.Drawing.Point(170, 86);
             this.txtDiaChiDon.Margin = new System.Windows.Forms.Padding(4);
             this.txtDiaChiDon.Multiline = true;
             this.txtDiaChiDon.Name = "txtDiaChiDon";
             this.txtDiaChiDon.Size = new System.Drawing.Size(187, 148);
             this.txtDiaChiDon.TabIndex = 4;
-            // 
-            // btnLuu
-            // 
-            this.btnLuu.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLuu.ForeColor = System.Drawing.Color.Black;
-            this.btnLuu.Location = new System.Drawing.Point(170, 286);
-            this.btnLuu.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(100, 28);
-            this.btnLuu.TabIndex = 6;
-            this.btnLuu.Text = "Lưu";
-            this.btnLuu.UseVisualStyleBackColor = true;
-            this.btnLuu.Click += new System.EventHandler(this.btnLuu_Click);
             // 
             // label2
             // 
@@ -199,7 +198,7 @@
             // 
             // txtSoDienThoai
             // 
-            this.txtSoDienThoai.Location = new System.Drawing.Point(170, 36);
+            this.txtSoDienThoai.Location = new System.Drawing.Point(171, 37);
             this.txtSoDienThoai.Margin = new System.Windows.Forms.Padding(4);
             this.txtSoDienThoai.Name = "txtSoDienThoai";
             this.txtSoDienThoai.Size = new System.Drawing.Size(187, 27);
@@ -292,6 +291,7 @@
             // 
             // FrmMain
             // 
+            this.AcceptButton = this.btnDatXe;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1469, 526);
@@ -321,9 +321,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnThoat;
         private System.Windows.Forms.TextBox txtDiaChiDon;
-        private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cboLoaiXe;
         private System.Windows.Forms.Label label3;
@@ -338,6 +336,8 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraEditors.SimpleButton btnThoat;
+        private DevExpress.XtraEditors.SimpleButton btnDatXe;
     }
 }
 
