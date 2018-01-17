@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="driverApp" ng-controller="mainCtrl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <title>Ứng dụng tài xế</title>
+
+    <!-- Font -->
+    <link type="text/css" href="https://fonts.googleapis.com/css?family=Muli:400,300" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- MetisMenu CSS -->
+    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- UI Grid CSS -->
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
+
+    <!-- Custom theme CSS -->
+    <link href="lib/bootstrap-sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- My Styles -->
+    <link href="style/appstyle.css" rel="stylesheet">
+    <link href="style/newlayout.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header text-right">
+                <a class="navbar-brand" href="#">Ứng dụng tài xế</a>
+                {{userData.name}},
+                <a ng-controller="loginCtrl" href="#" ng-click="logout()" style="line-height: 50px;">
+                    <i class="fa fa-sign-out fa-fw"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            </div>
+            <!-- /.navbar-header -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div ui-view></div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <div id="modal_area"></div>
+    <my-loading/>
+
+    <!-- jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="lib/bootstrap-sb-admin-2/js/sb-admin-2.js"></script>
+
+    <!-- ANGULAR JS -->
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-router/release/stateEvents.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+    <!-- MY SOURCE CODE -->
+    <!--1 components-->
+    <script type="text/javascript" src="js/modules/helper.js"></script>
+    <!--2 modules-->
+    <script type="text/javascript" src="js/modules/app.js"></script>
+    <script type="text/javascript" src="js/modules/routes.js"></script>
+    <!--3.1 directives-->
+    <script type="text/javascript" src="js/directives/loading.js"></script>
+    <!--3.2 controllers-->
+    <script type="text/javascript" src="js/controllers/main-ctrl.js"></script>
+    <script type="text/javascript" src="js/controllers/driver-ctrl.js"></script>
+    <script type="text/javascript" src="js/controllers/login-ctrl.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrrkYVy5XgV8EZtz0ztxRioAJh4Z50upM"></script>
+    <!-- FIREBASE -->
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    
+        <!-- AngularFire -->
+        <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+        <script src="lib/config/ggFirebase.js"></script>
+</body>
+
+</html>

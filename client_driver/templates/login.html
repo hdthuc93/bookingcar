@@ -1,0 +1,65 @@
+<div class="login-page" ng-controller="loginCtrl">
+    <div class="panel-lite">
+        <h4>Ứng dụng tài xế</h4>
+        <h4 ng-show="!isRegister" class="text-center">Đăng nhập</h4>
+        <h4 ng-show="isRegister" class="text-center">Đăng kí</h4>
+        <div ng-show="!isRegister" class="thumbur">
+            <div class="icon-lock"></div>
+        </div>
+        <form ng-show="!isRegister" role="form" id="login-form" name="loginForm">
+            <div class="box-input">
+                <input class="box-control" name="username" ng-model="username" autofocus ng-class="{
+                        'input-error': loginForm.username.$invalid &&  loginForm.username.$touched }"
+                    required>
+                <label class="box-label">Người dùng</label>
+            </div>
+            <div class="box-input">
+                <input class="box-control" name="password" type="password" ng-model="password" maxlength="30" ng-class="{
+                        'input-error': loginForm.password.$invalid && loginForm.password.$touched }"
+                    required>
+                <label class="box-label">Mật khẩu</label>
+            </div>
+            <a class="link" ng-click="isRegister = true">Đăng kí</a>
+            <button class="floating-btn" ng-click="login()">
+                <i class="icon-arrow"></i>
+            </button>
+        </form>
+        <form ng-show="isRegister" role="form" id="register-form" name="registerForm">
+            <div class="box-input">
+                <input class="box-control" name="lastName" ng-model="item.last_name" autofocus ng-class="{
+                            'input-error': registerForm.lastName.$invalid && registerForm.lastName.$touched }" title="Họ tên là bắt buộc"
+                    required>
+                <label class="box-label">Họ</label>
+            </div>
+            <div class="box-input">
+                <input class="box-control" name="firstName" ng-model="item.first_name" ng-class="{
+                            'input-error': registerForm.firstName.$invalid && registerForm.firstName.$touched }" title="Họ tên là bắt buộc"
+                    required>
+                <label class="box-label">Tên</label>
+            </div>
+            <div class="box-input">
+                <input class="box-control" ng-pattern="usernamePattern" name="username" ng-model="item.username" autofocus ng-class="{
+                        'input-error': registerForm.username.$invalid && registerForm.username.$touched }" title="Địa chỉ username là bắt buộc"
+                    required>
+                <label class="box-label">username</label>
+            </div>
+            <div class="box-input">
+                <input class="box-control" name="password" type="password" ng-model="item.password" maxlength="30" ng-class="{
+                        'input-error': registerForm.password.$invalid && registerForm.password.$touched }" title="Mật khẩu là bắt buộc"
+                    required>
+                <label class="box-label">Mật khẩu</label>
+            </div>
+            <div class="box-input">
+                <input class="box-control" ng-pattern="item.password" name="rePassword" type="password" ng-model="item.repassword" maxlength="30"
+                    ng-class="{
+                        'input-error': (registerForm.rePassword.$touched && registerForm.rePassword.$error.pattern) || (registerForm.rePassword.$invalid && registerForm.rePassword.$touched) }"
+                    title="Mật khẩu là bắt buộc" required>
+                <label class="box-label">Xác nhận mật khẩu</label>
+            </div>
+            <a class="link" ng-click="isRegister = false">Quay lại đăng nhập</a>
+            <button class="floating-btn" ng-click="register()">
+                <i class="fa fa-check"></i>
+            </button>
+        </form>
+    </div>
+</div>

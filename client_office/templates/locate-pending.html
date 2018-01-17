@@ -1,0 +1,16 @@
+<div class="box-2" ng-controller="locatePendingCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Danh sách chờ định vị</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div id="waitingList" ui-grid-resize-columns ui-grid="waitingList" class="grid">
+                    <span ng-show="waitingList.data.length==0" class="grid-status">Không có dữ liệu</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

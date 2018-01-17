@@ -33,3 +33,21 @@ SPA/src/server/tmp/*
 .NET APP/.vs/Telephonist/v15/Server/sqlite3/storage.ide-wal
 .NET APP/Telephonist/bin/Debug/Newtonsoft.Json.xml
 .NET APP/Telephonist/obj/Debug/Telephonist.csproj.CopyComplete
+
+
+#server side ignore
+server_side/src/configs/connection.js
+server_side/src/configs/firebase_auth.json
+server_side/node_modules
+
+
+#SPA_driver
+client_driver/node_modules
+client_driver/bower_components
+client_driver/lib/config/ggFirebase.js
+
+
+#SPA_office
+client_office/node_modules
+client_office/bower_components
+client_office/lib/config/ggFirebase.js
