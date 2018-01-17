@@ -108,18 +108,17 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
                     });
                 } else {
                     //hien thi lich trinh
-                    var markerList = [];
+                    $scope.markerList = [];
                     var refClosestDriver = firebase.database().ref("drivers").orderByChild("id").equalTo(data.tai_xe).limitToFirst(1);
                     $scope.closestDriver = $firebaseArray(refClosestDriver);//real time    
-                                  
-                    $scope.closestDriver.$loaded().then(function () {
 
+                    $scope.closestDriver.$loaded().then(function () {
                         var directionsService = new google.maps.DirectionsService;
                         var directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true, polylineOptions: { strokeColor: "orange" } });
                         directionsDisplay.setMap(map);
 
-                        firebase.database().ref("drivers/"+$scope.closestDriver[0].$id).on("child_changed", function(d){
-                            
+                        //change pos
+                        firebase.database().ref("drivers/" + $scope.closestDriver[0].$id).on("child_changed", function (d) {
                             directionsService.route({
                                 origin: new google.maps.LatLng(JSON.parse(d.val()).lat, JSON.parse(d.val()).lng),
                                 destination: new google.maps.LatLng(JSON.parse(data.xuat_phat_toa_do).lat, JSON.parse(data.xuat_phat_toa_do).lng),
@@ -129,9 +128,10 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
                                 if (status === 'OK') {
                                     directionsDisplay.setDirections(response);
                                     var leg = response.routes[0].legs[0];
-                                    removeAllMarker(markerList);
-                                    markerList.push(makeMarker(leg.start_location, "/img/car.png", $scope.closestDriver[0].ten_nv));
-                                    markerList.push(makeMarker(leg.end_location, "/img/client.png", " "));
+                                    removeAllMarker($scope.markerList);
+                                    $scope.markerList = [];
+                                    $scope.markerList.push(makeMarker(leg.start_location, "/img/car.png", $scope.closestDriver[0].ten_nv));
+                                    $scope.markerList.push(makeMarker(leg.end_location, "/img/client.png", " "));
                                 } else {
                                     helper.popup.info({ title: "Lỗi", message: "Không thể hiển thị lộ trình", close: function () { return; } });
                                 }
@@ -147,9 +147,10 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
                                 if (status === 'OK') {
                                     directionsDisplay.setDirections(response);
                                     var leg = response.routes[0].legs[0];
-                                    removeAllMarker(markerList);
-                                    markerList.push(makeMarker(leg.start_location, "/img/car.png", $scope.closestDriver[0].ten_nv));
-                                    markerList.push(makeMarker(leg.end_location, "/img/client.png", " "));
+                                    removeAllMarker($scope.markerList);
+                                    $scope.markerList = [];
+                                    $scope.markerList.push(makeMarker(leg.start_location, "/img/car.png", $scope.closestDriver[0].ten_nv));
+                                    $scope.markerList.push(makeMarker(leg.end_location, "/img/client.png", " "));
                                 } else {
                                     helper.popup.info({ title: "Lỗi", message: "Không thể hiển thị lộ trình", close: function () { return; } });
                                 }
@@ -175,9 +176,7 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
                 minDistance = distance;
                 closestDriverId = $scope.driverList[i].id;
             }
-            // console.log("aaaaaaa", minDistance > distance, minDistance, minDistance, closestDriverId)
         }
-
 
         firebase.database().ref("booking").child(id).update({
             xuat_phat_toa_do: JSON.stringify($scope.position),
@@ -217,8 +216,9 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
         });
     }
 
-    function removeAllMarker(lst){
-        delete lst[0];
-        delete lst[1];
+    function removeAllMarker(lst) {
+        for (var i in lst) {
+            lst[i].setMap(null)
+        }
     }
 }
