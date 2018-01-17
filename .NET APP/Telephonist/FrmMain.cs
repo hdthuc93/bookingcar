@@ -60,7 +60,6 @@ namespace Telephonist
                         item.Ten_loai_xe = "Premium";
                     else
                         item.Ten_loai_xe = "Thường";
-
                     if (!string.IsNullOrEmpty(item.Tg_dat))
                     {
                         double temp;
@@ -69,7 +68,7 @@ namespace Telephonist
                     }
                     if (item.Status != null)
                     {
-                        if ( int.Parse(item.Status) == (int)Enums.Status.ChuaDinhVi)
+                        if (int.Parse(item.Status) == (int)Enums.Status.ChuaDinhVi)
                         {
                             item.Status = "Chưa định vị";
                         }
@@ -120,7 +119,6 @@ namespace Telephonist
                     MessageBox.Show("Số điện thoại không hợp lệ. Xin vui lòng nhập lại!");
                     return;
                 }
-
                 string DiaChiDon = txtDiaChiDon.Text;
                 bool DaDinhVi = KiemTraToaDoDaDinhVi(DiaChiDon);
                 int TrangThai = 0;
@@ -130,15 +128,14 @@ namespace Telephonist
                     TrangThai = 1;
                     ToaDoDon = getToaDoXuatPhatDaDinhVi(DiaChiDon);
                 }
-
                 var json = JsonConvert.SerializeObject(new
                 {
                     dt_kh = txtSoDienThoai.Text.Trim(),
                     ma_xe = string.Empty,
                     ma_loai_xe = cboLoaiXe.SelectedIndex,
+                    status = TrangThai,
                     tg_dat = Function.ConvertDateTimeToTimestamp(DateTime.Now),
                     xuat_phat = txtDiaChiDon.Text,
-                    status = TrangThai,
                     xuat_phat_toa_do = ToaDoDon
                 });
 
@@ -152,7 +149,10 @@ namespace Telephonist
                 json = (new StreamReader(response.GetResponseStream())).ReadToEnd();
                 if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Đặt xe thành công", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (DaDinhVi)
+                        MessageBox.Show("Điểm này đã được định vị và chuyển yêu cầu sang hệ thống điều xe thành công", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                        MessageBox.Show("Đặt xe thành công", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadListDatXe();
                 }
                 else
@@ -192,7 +192,7 @@ namespace Telephonist
                     var data = firebaseLookup.Values.ToList();
                     foreach (DatXe item in data)
                     {
-                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat))
+                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat, StringComparison.InvariantCultureIgnoreCase))
                         {
                             return true;
                         }
@@ -223,7 +223,7 @@ namespace Telephonist
                     var data = firebaseLookup.Values.ToList();
                     foreach (DatXe item in data)
                     {
-                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat))
+                        if (int.Parse(item.Status) == (int)Enums.Status.DaDinhVi && diachi.Equals(item.Xuat_phat, StringComparison.InvariantCultureIgnoreCase))
                         {
                             return item.Xuat_phat_toa_do;
                         }
@@ -236,6 +236,7 @@ namespace Telephonist
                 MessageBox.Show(e.ToString());
                 return string.Empty;
             }
+
         }
     }
 }
