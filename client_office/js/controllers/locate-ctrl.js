@@ -133,7 +133,7 @@ function locateCtrl($scope, $rootScope, helper, $location, $http, $firebaseObjec
                                     $scope.markerList.push(makeMarker(leg.start_location, "/img/car.png", $scope.closestDriver[0].ten_nv));
                                     $scope.markerList.push(makeMarker(leg.end_location, "/img/client.png", " "));
                                 } else {
-                                    helper.popup.info({ title: "Lỗi", message: "Không thể hiển thị lộ trình", close: function () { return; } });
+                                    //helper.popup.info({ title: "Lỗi", message: "Không thể hiển thị lộ trình", close: function () { return; } });
                                 }
                             });
                         })

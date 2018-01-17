@@ -38,7 +38,7 @@ function managePositionCtrl($scope, $rootScope, helper, $location, $http, $fireb
         columnDefs: [
             {
                 field: 'action', displayName: '', minWidth: 80, maxWidth: 100,
-                cellTemplate: '<div class="ui-grid-cell-contents text-center"><button ng-if="row.entity.status == 0"  title="Sửa tọa độ" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-map-marker"></i></button><button ng-if="row.entity.status != 0&&row.entity.status != 6&&row.entity.status != 5"  title="Xem đường đi" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-eye"></i></button></div>'
+                cellTemplate: '<div class="ui-grid-cell-contents text-center"><button ng-if="row.entity.status == 0"  title="Sửa tọa độ" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-map-marker"></i></button><button ng-if="row.entity.status != 0&&row.entity.status != 6&&row.entity.status != 5&&row.entity.status != 4"  title="Xem đường đi" type="button" style="padding: 0px 5px;" class="btn btn-default" ng-click="grid.appScope.locate(row)"><i class="fa fa-eye"></i></button></div>'
             },
             {
                 field: 'xuat_phat', displayName: 'Địa chỉ đón', minWidth: 160,
